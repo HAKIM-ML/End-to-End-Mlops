@@ -1,6 +1,7 @@
-from src.mlproject.constants import *
-from src.mlproject.utils.common import read_yaml, create_directories
-from mlproject.entity.config_entity import ModelTrainerConfig,DataIngestionConfig,DataValidationConfig,DataTransformationConfig
+from mlproject.constants import *
+from mlproject.utils.common import read_yaml, create_directories
+from mlproject.entity.config_entity import (ModelTrainerConfig,DataIngestionConfig,DataValidationConfig,
+                                            DataTransformationConfig,ModelEvaluationConfig)
 class ConfigurationManager:
     def __init__(
         self,
@@ -76,3 +77,25 @@ class ConfigurationManager:
         )
 
         return model_trainer_config
+    
+    
+    
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        config = self.config.model_evaluation
+        params = self.params.ElasticNet
+        schema =  self.schema.TARGET_COLUMN
+
+        create_directories([config.root_dir])
+
+        model_evaluation_config = ModelEvaluationConfig(
+            root_dir=config.root_dir,
+            test_data_path=config.test_data_path,
+            model_path = config.model_path,
+            all_params=params,
+            metric_file_name = config.metric_file_name,
+            target_column = schema.name,
+            mlflow_uri="https://dagshub.com/azizulhakim8291/End-to-End-Mlops.mlflow",
+           
+        )
+
+        return model_evaluation_config
