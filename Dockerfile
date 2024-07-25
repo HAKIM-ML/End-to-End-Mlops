@@ -1,5 +1,5 @@
-# Use an official Python runtime as the base image
-FROM python:3.11-slim
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
 # Set the working directory in the container
 WORKDIR /app
@@ -8,13 +8,13 @@ WORKDIR /app
 COPY . /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install  -r requirements.txt
 
 # Make port 8501 available to the world outside this container
 EXPOSE 8501
 
 # Define environment variable
-ENV NAME World
+ENV PYTHONUNBUFFERED=1
 
 # Run app.py when the container launches
-CMD ["streamlit", "run", "wine_quality_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "your_app.py"]
